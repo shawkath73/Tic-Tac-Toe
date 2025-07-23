@@ -1,41 +1,49 @@
+<<<<<<< HEAD
+=======
+if (window.innerWidth < 768) {
+    alert("⚠️ Please open this game on a desktop or larger screen for the best experience.");
+}
+
+>>>>>>> d938b69 (Inittial commit)
 let boxes = document.querySelectorAll('.box');
 let RstBtn = document.querySelector("#Rstbtn");
 let newBtn = document.querySelector("#newBtn");
 let container = document.querySelector(".msgContainer");
 let msg = document.querySelector(".msg");
-let statusText = document.querySelector("#statusText")
+let statusText = document.querySelector("#statusText");
 
 let turnO = true;
 let currPlayer = "X";
 let nxtPlayer = "O";
 
-const winPatterns = [[0,1,2],
-                     [0,3,6],
-                     [0,4,8],
-                     [1,4,7],
-                     [2,5,8],
-                     [2,4,6],
-                     [3,4,5],
-                     [6,7,8]]
+const winPatterns = [
+    [0, 1, 2],
+    [0, 3, 6],
+    [0, 4, 8],
+    [1, 4, 7],
+    [2, 5, 8],
+    [2, 4, 6],
+    [3, 4, 5],
+    [6, 7, 8]
+    ];
 
 const resetGame = () => {
-    turnO=true;
+    turnO = true;
     enableBoxes();
     container.classList.add("hide");
     statusText.innerText = `${nxtPlayer}'s Turn`;
     document.querySelectorAll(".win-line").forEach(line => line.remove());
-}
+    };
 
 boxes.forEach((box) => {
     box.addEventListener('click', () => {
-        if (turnO){
+        if (turnO) {
             box.innerText = 'O';
-            turnO=false;
+            turnO = false;
             statusText.innerText = `${currPlayer}'s Turn`;
-        }
-        else{
+        } else {
             box.innerText = 'X';
-            turnO=true;
+            turnO = true;
             statusText.innerText = `${nxtPlayer}'s Turn`;
         }
         box.disabled = true;
@@ -47,18 +55,17 @@ const disableBoxes = () => {
     boxes.forEach(box => {
         box.disabled = true;
     });
-}
+};
 
-const enableBoxes= () => {
-    for(let box of boxes){
-        box.disabled=false;
-        box.innerText="";
-    }
-}
+const enableBoxes = () => {
+    boxes.forEach(box => {
+        box.disabled = false;
+        box.innerText = "";
+    });
+};
 
 const showWinner = (winner, pattern) => {
-    drawWinLine(pattern); 
-
+    drawWinLine(pattern);
     setTimeout(() => {
         msg.innerText = `🎉 Congratulations, Winner is ${winner}!`;
         container.classList.remove("hide");
@@ -75,8 +82,9 @@ const checkWinner = () => {
         let pos3 = boxes[pattern[2]].innerText;
 
         if (pos1 !== "" && pos1 === pos2 && pos2 === pos3) {
-            showWinner(pos1,pattern);
+            showWinner(pos1, pattern);
             isWinner = true;
+            break;
         }
     }
 
@@ -87,23 +95,22 @@ const checkWinner = () => {
         }
     });
 
-   if (!isWinner && isTie) {
-    setTimeout(() => {
-        msg.innerText = "🤝 It's a Tie!";
-        container.classList.remove("hide");
-        disableBoxes();
-    }, 500);
-}
+    if (!isWinner && isTie) {
+        setTimeout(() => {
+            msg.innerText = "🤝 It's a Tie!";
+            container.classList.remove("hide");
+            disableBoxes();
+        }, 500);
+    }
 };
 
 const drawWinLine = (pattern) => {
     const line = document.createElement("div");
     line.classList.add("win-line");
 
-    const gridSize = boxes[0].offsetWidth * 3; // size of the full game grid
-    const boxCenter = boxes[0].offsetWidth / 2;
+    const boxSize = boxes[0].offsetWidth;
+    const boxCenter = boxSize / 2;
 
-    // Get positions of the first and last box in the win pattern
     const startBox = boxes[pattern[0]].getBoundingClientRect();
     const endBox = boxes[pattern[2]].getBoundingClientRect();
     const containerBox = document.querySelector(".game").getBoundingClientRect();
@@ -123,7 +130,6 @@ const drawWinLine = (pattern) => {
 
     document.querySelector(".game").appendChild(line);
 
-    // Trigger the animation after a tick
     requestAnimationFrame(() => {
         line.style.width = `${length}px`;
     });
