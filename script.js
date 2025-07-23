@@ -1,10 +1,7 @@
-<<<<<<< HEAD
-=======
 if (window.innerWidth < 768) {
     alert("⚠️ Please open this game on a desktop or larger screen for the best experience.");
 }
 
->>>>>>> d938b69 (Inittial commit)
 let boxes = document.querySelectorAll('.box');
 let RstBtn = document.querySelector("#Rstbtn");
 let newBtn = document.querySelector("#newBtn");
@@ -25,7 +22,7 @@ const winPatterns = [
     [2, 4, 6],
     [3, 4, 5],
     [6, 7, 8]
-    ];
+];
 
 const resetGame = () => {
     turnO = true;
@@ -33,7 +30,7 @@ const resetGame = () => {
     container.classList.add("hide");
     statusText.innerText = `${nxtPlayer}'s Turn`;
     document.querySelectorAll(".win-line").forEach(line => line.remove());
-    };
+};
 
 boxes.forEach((box) => {
     box.addEventListener('click', () => {
